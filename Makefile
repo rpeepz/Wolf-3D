@@ -28,6 +28,8 @@ OUT		= help_text.c
 
 FLAGS	= -Wall -Wextra -Werror
 INC		= -I ./includes/
+DEV		=_DEBUG_RULE_
+INPUT = $(shell bash -c 'read -p "confirm (y/n) " pwd; echo $$pwd')
 #MLX COMPILE ORDER
 MLX_LNK	= -L ./minilibx_macos -l mlx_macos -framework AppKit -framework OpenGL
 #LIB COMPILE ORDER
@@ -74,14 +76,18 @@ $(NAME):$(OBJ)
 debug:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(addprefix src/output/,$(OUT)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME)
+		@gcc -D$(DEV) $(FLAGS) -g $(addprefix src/,$(SRC)) $(addprefix src/output/,$(OUT)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME)
 		@printf "[$(YELLOW)debug   $(NC)]\t[:##########:]\n"
 
-sanitize:
+santitize:
+ifeq ($(INPUT),y)
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
 		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(addprefix src/output/,$(OUT)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME) -fsanitize=address
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
+else
+		@printf "$(RED)Exit$(NC)\n"
+endif
 
 q:
 		@rm -rf $(NAME)
@@ -91,7 +97,9 @@ q:
 $(OBJ_PATH):
 		@mkdir -p $@
 
-$(OBJ_PATH)/%.o: src/%.c | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: src/%.c includes/wolf3d.h | $(OBJ_PATH)
 		@gcc $(FLAGS) $(INC) -o $@ -c $<
 $(OBJ_PATH)/%.o: src/output/%.c | $(OBJ_PATH)
 		@gcc $(FLAGS) $(INC) -o $@ -c $<
+
+

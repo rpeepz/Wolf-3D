@@ -72,7 +72,7 @@ void	render(t_game *game)
 
 	ft_memmove(game->image->ptr, game->scene[LAYERS - 1], sizeof(game->image->ptr));
 	init_pix(&pix, game);
-	if (!CORE_MODE)
+	if (SINGLE_CORE)
 	{
 		pixel.x = -1;
 		while (++pixel.x < WIDTH)
@@ -88,7 +88,7 @@ void	render(t_game *game)
 			}
 		}
 	}
-	// else
-	// 	render_thread(game, pix);
+//	else
+//	 	render_thread(game, pix);
 	mlx_put_image_to_window(game->mlx, game->win, game->image->image, 0, 0);
 }

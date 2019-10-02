@@ -22,17 +22,20 @@
 # include <stdio.h>
 
 # define USAGE "usage: ./wolf3d [ ]"
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 600
+# define HEIGHT 600
 # define VALID_IN_X(x) (x == KEY_RIGHT || x == KEY_LEFT)
 # define VALID_IN_Y(x) (x == KEY_UP || x == KEY_DOWN)
 # define VALID_IN_Z(x) (x == KEY_PLUS || x == KEY_MINUS || x == KEY_SPACE)
 # define STATIC_ZOOM(x) (x == PG_UP || x == PG_DOWN)
 # define LAYERS 5
-# define DEBUG 1
-# define CORE_MODE 0
+# define SINGLE_CORE 1
 # define THREAD_COUNT 8
-
+# ifdef _DEBUG_RULE_
+#  define DEBUG 1
+# else
+#  define DEBUG 0
+# endif
 /*
 **	STRUCTS
 */
