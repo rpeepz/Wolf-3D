@@ -15,9 +15,9 @@ NAME	= wolf3d
 
 #COLORS
 GREEN	= \033[0;32m
-RED		= \033[0;31m
+RED	= \033[0;31m
 YELLOW	= \033[0;33m
-NC		= \033[0m
+NC	= \033[0m
 
 SRC		= main.c \
 		init.c \
@@ -27,12 +27,13 @@ SRC		= main.c \
 OUT		= help_text.c
 
 FLAGS	= -Wall -Wextra -Werror
-INC		= -I wolf3d.h
+INC		= -I ./includes/
 #MLX COMPILE ORDER
 MLX_LNK	= -L ./minilibx_macos -l mlx_macos -framework AppKit -framework OpenGL
 #LIB COMPILE ORDER
 FT_LNK	= -L ./libft -l ft
-#Objects
+
+#extra paths
 OUT_PATH= output
 OBJ_PATH= obj
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRC:.c=.o))

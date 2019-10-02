@@ -19,25 +19,25 @@
 ** pixel variables
 */
 
-typedef struct			s_image
+typedef struct				s_image
 {
 	void				*image;
 	char				*ptr;
-	int					bpp;
-	int					stride;
-	int					endian;
-}						t_image;
+	int				bpp;
+	int				stride;
+	int				endian;
+}					t_image;
 
-typedef struct			s_camera
+typedef struct				s_camera
 {
 	double				offsetx;
 	double				offsety;
 	double				offsetz;
 	double				zoom;
 	int 				scale;
-}						t_camera;
+}					t_camera;
 
-typedef struct			s_pix
+typedef struct				s_pix
 {
 	double				a;
 	double				b;
@@ -48,7 +48,7 @@ typedef struct			s_pix
 	double				ymin;
 	double				ymax;
 	double				c[2];
-	int					color[3];
-}						t_pix;
+	int				color[3];
+}					t_pix;
 
 #endif

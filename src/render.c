@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../wolf3d.h"
+#include "../includes/wolf3d.h"
 
 void	get_color(t_game *game, t_pix *pix, size_t n)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../wolf3d.h"
+#include "../includes/wolf3d.h"
 
 void			init_pix(t_pix *pix, t_game *game)
 {

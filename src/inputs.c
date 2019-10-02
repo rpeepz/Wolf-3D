@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../wolf3d.h"
+#include "../includes/wolf3d.h"
 
 int				hook_mousedown(int in, int x, int y, t_game *game)
 {
