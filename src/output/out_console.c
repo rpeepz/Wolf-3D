@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_text.c                                        :+:      :+:    :+:   */
+/*   out_console.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:40:38 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/01 05:32:04 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/05 18:20:18 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/wolf3d.h"
 
+void	ft_error(int key)
+{
+	if (key == 1)
+		printf("Bad file\n");
+	else if (key == 2)
+		printf("Invalid map header\n");
+	else if (key == 42)
+		printf("Malloc Error\n");
+	else
+		printf("Invalid map [%d]\n", key);
+}
+
 int		ft_out(int key)
 {
-	if (key == KEY_PLUS)
-		printf("'+'\n");
+	if (key <= 0)
+		ft_error(-key);
+	else if (key == KEY_PLUS)
+		printf("z axis '+' ");
 	else if (key == KEY_MINUS)
-		printf("'-'\n");
+		printf("z axis '-' ");
 	else if (key == KEY_UP)
 		printf("UP\n");
 	else if (key == KEY_DOWN)
@@ -34,8 +48,8 @@ int		ft_out(int key)
 		printf("Zoom level + ");
 	else if (key == PG_DOWN)
 		printf("Zoom level - ");
-	else if (key == -42)
-		printf("Malloc Error\n");
+	else if (key == KEY_R)
+		printf("Reset offset, zoom, scale\n");
 	return (1);
 }
 
@@ -46,7 +60,7 @@ int		ft_help(void)
 	ft_printf("%11s\tJump\n", "Space");
 	ft_printf("%11c\tIncrease 'Z'\n%11c\tDecrease 'Z'\n",
 	'+', '-');
-	ft_printf("%11c\tToggle mouse lock\n", 'C');
+	ft_printf("%11c\tToggle Pause\n", 'P');
 	ft_printf("%11s\tIncrease Zoom\n%11s\tZecrease zoom\n",
 	"page up", "page down");
 	ft_printf("%11c\tReset position, 'Z' & zoom\n", 'R');

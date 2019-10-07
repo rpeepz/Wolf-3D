@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/01 06:37:00 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/05 18:17:03 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int				hook_mousedown(int in, int x, int y, t_game *game)
 
 int				hook_mousemove(int x, int y, t_game *game)
 {
-
 	if (!game->in->mouse->lock)
 	{
 		if (x > 0 && y > 0 && x < WIDTH && y < HEIGHT)
@@ -64,20 +63,24 @@ int				hook_mousemove(int x, int y, t_game *game)
 
 static void		in_key(t_game *game, int key)
 {
-	if (key == KEY_PLUS && (DEBUG ? ft_out(key) : 1))
-		game->cam->offsetz += 2;
-	else if (key == KEY_MINUS && (DEBUG ? ft_out(key) : 1))
-		game->cam->offsetz -= 2;
+	if ((key == KEY_PLUS || key == KEY_MINUS) && (DEBUG ? ft_out(key) : 1))
+	{
+		if ((key == KEY_PLUS && game->cam->offsetz < (HEIGHT - 2)) ||
+		(key == KEY_MINUS && game->cam->offsetz > (2 - HEIGHT)))
+			game->cam->offsetz += (key == KEY_PLUS) ? 2 : -2;
+		(DEBUG ? printf("%f\n", game->cam->offsetz) : 0);
+	}
 	else if (key == KEY_SPACE && (DEBUG ? ft_out(key) : 1))
 	{
-		game->cam->offsetz += 5;
+		game->cam->offsetz += 10;
 		render(game);
-		game->cam->offsetz -= 5;
 	}
-	else if ((key == KEY_UP || key == KEY_DOWN) && (DEBUG ? ft_out(key) : 1))
+	else if ((VALID_IN_Y(key)) && (DEBUG ? ft_out(key) : 1))
 		game->cam->offsety -= (key == KEY_UP) ? 0.35 : -0.35;
-	else if ((key == KEY_RIGHT || key == KEY_LEFT) && (DEBUG ? ft_out(key) : 1))
+	else if ((VALID_IN_X(key)) && (DEBUG ? ft_out(key) : 1))
 		game->cam->offsetx -= (key == KEY_LEFT) ? 0.35 : -0.35;
+	(DEBUG && VALID_IN_X(key)) ? printf("%f\n", game->cam->offsetx) : 0;
+	(DEBUG && VALID_IN_Y(key)) ? printf("%f\n", game->cam->offsety) : 0;
 }
 
 int				hook_keydown(int key, t_game *game)
@@ -86,11 +89,13 @@ int				hook_keydown(int key, t_game *game)
 		in_key(game, key);
 	else if (STATIC_ZOOM(key))
 		hook_mousedown(key, 0, 0, game);
-	else if (key == KEY_P && (DEBUG ? printf("Key: 'P' Pause: %s\n",
-		game->in->mouse->lock ? "Off" : "On") : 1))
+	else if (key == KEY_P && printf("Key: 'P' Pause: %s\n",
+		game->in->mouse->lock ? "Off" : "On"))
 		game->in->mouse->lock = (game->in->mouse->lock) ? 0 : 1;
 	else if (key == KEY_R && (DEBUG ? ft_out(key) : 1))
 	{
+		DEBUG ? printf("z %f\n", game->cam->offsetz) : 0;
+		game->cam->offsetz = 0;
 		game->cam->offsetx = WIDTH / 2;
 		game->cam->offsety = HEIGHT / 2;
 		game->cam->zoom = 1.01;
@@ -101,13 +106,7 @@ int				hook_keydown(int key, t_game *game)
 		(DEBUG ? system("leaks wolf3d") : 1);
 		exit((int)del_game(&game, 0));
 	}
-	if (VALID_IN_X(key) || VALID_IN_Y(key) || VALID_IN_Z(key))
+	if (VALID_IN_X(key) || VALID_IN_Y(key) || VALID_IN_Z(key) || key == KEY_R)
 		render(game);
 	return (0);
-}
-
-int				hook_close(t_game *game)
-{
-	hook_keydown(KEY_ESC, game);
-	return (1);
 }

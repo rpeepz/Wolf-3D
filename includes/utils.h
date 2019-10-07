@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:04:46 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/01 07:00:45 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/05 18:14:42 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,25 @@
 ** pixel variables
 */
 
-typedef struct				s_image
+typedef struct			s_image
 {
 	void				*image;
 	char				*ptr;
-	int				bpp;
-	int				stride;
-	int				endian;
-}					t_image;
+	int					bpp;
+	int					stride;
+	int					endian;
+}						t_image;
 
-typedef struct				s_camera
+typedef struct			s_camera
 {
 	double				offsetx;
 	double				offsety;
 	double				offsetz;
 	double				zoom;
-	int 				scale;
-}					t_camera;
+	int					scale;
+}						t_camera;
 
-typedef struct				s_pix
+typedef struct			s_pix
 {
 	double				a;
 	double				b;
@@ -48,7 +48,7 @@ typedef struct				s_pix
 	double				ymin;
 	double				ymax;
 	double				c[2];
-	int				color[3];
-}					t_pix;
+	int					color[3];
+}						t_pix;
 
 #endif

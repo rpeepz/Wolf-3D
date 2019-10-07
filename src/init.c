@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 04:17:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/01 07:10:15 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/02 22:26:25 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ t_game			*del_game(t_game **agame, int i)
 	return (NULL);
 }
 
-t_game			*init(char *title, int type)
+t_game			*init(char *title, t_map *map)
 {
 	t_game	*game;
+	int		i;
 
 	if (!(game = ft_memalloc(sizeof(t_game))))
 		return (NULL);
-	game->type = type;
+	game->map = map;
 	if (!(game->mlx = mlx_init()) ||
 		!(game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, title)) ||
 		!(game->scene = ft_memalloc(sizeof(char *) * LAYERS)) ||
@@ -92,11 +93,12 @@ t_game			*init(char *title, int type)
 		!(game->in->key = ft_memalloc(sizeof(t_keys))) ||
 		!(game->in->mouse = ft_memalloc(sizeof(t_mouse))))
 		return (del_game(&game, 0));
-	type = 0;
-	while (type < LAYERS)
-		game->scene[type++] = ft_memalloc(sizeof(game->image->ptr));
+	i = 0;
+	while (i < LAYERS)
+		game->scene[i++] = ft_memalloc(sizeof(game->image->ptr));
 	game->cam->offsetx = WIDTH / 2;
-	game->cam->offsety = HEIGHT / 2;;
+	game->cam->offsety = HEIGHT / 2;
+	game->cam->offsetz = 0;
 	game->cam->zoom = 1.01;
 	game->cam->scale = 1;
 	return (game);
