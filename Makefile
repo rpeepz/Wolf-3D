@@ -72,7 +72,7 @@ $(NAME): $(OBJ)
 		@printf "[$(GREEN)$(NAME)$(NC) ]\t[:##        :]\r"
 		@gcc $(FLAGS) $(OBJ_PATH)/*.o $(MLX_LNK) $(FT_LNK) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC) ]\t[:##########:]\n"
-		@printf "usage: ./wolf3d [ ]\n"
+		@printf "usage: ./wolf3d [file.map]\n"
 
 debug:
 		@rm -rf $(NAME)

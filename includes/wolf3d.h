@@ -21,7 +21,7 @@
 # include <pthread.h>
 # include <stdio.h>
 
-# define USAGE "usage: ./wolf3d file.map"
+# define USAGE "usage: ./wolf3d [file.map]"
 # define WIDTH 1280
 # define HEIGHT 720
 # define VALID_IN_X(x) (x == KEY_RIGHT || x == KEY_LEFT)
