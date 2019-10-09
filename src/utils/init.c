@@ -1,0 +1,69 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/01 04:17:09 by rpapagna          #+#    #+#             */
+/*   Updated: 2019/10/08 19:55:45 by rpapagna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/wolf3d.h"
+
+void			init_pix(t_pix *pix, t_game *game)
+{
+	pix->w = 5;
+	pix->h = (pix->w * HEIGHT) / WIDTH;
+	pix->xmin = -(pix->w / 2);
+	pix->ymin = -(pix->h / 2);
+	pix->xmax = pix->xmin + pix->w;
+	pix->ymax = pix->ymin + pix->h;
+	pix->xmin = pix->xmin - (WIDTH / 2) + game->cam->offsetx;
+	pix->ymin = pix->ymin - (HEIGHT / 2) + game->cam->offsety;
+	pix->xmax = pix->xmax - (WIDTH / 2) + game->cam->offsetx;
+	pix->ymax = pix->ymax - (HEIGHT / 2) + game->cam->offsety;
+}
+
+static t_image	*new_image(t_game *game)
+{
+	t_image		*img;
+
+	if (!(img = ft_memalloc(sizeof(t_image))))
+		return (NULL);
+	if (!(img->image = mlx_new_image(game->mlx, WIDTH, HEIGHT)))
+		return (del_image(game, img));
+	img->pixels = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
+			&img->endian);
+	img->bpp /= 8;
+	return (img);
+}
+
+t_game			*init(char *title, t_map *map)
+{
+	t_game	*game;
+	int		i;
+
+	if (!(game = ft_memalloc(sizeof(t_game))))
+		return (NULL);
+	game->map = map;
+	if (!(game->mlx = mlx_init()) ||
+		!(game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, title)) ||
+		!(game->scene = ft_memalloc(sizeof(char *) * LAYERS)) ||
+		!(game->image = new_image(game)) ||
+		!(game->cam = ft_memalloc(sizeof(t_camera))) ||
+		!(game->in = ft_memalloc(sizeof(t_input))) ||
+		!(game->in->key = ft_memalloc(sizeof(t_keys))) ||
+		!(game->in->mouse = ft_memalloc(sizeof(t_mouse))))
+		return (del_game(&game, 0));
+	i = 0;
+	while (i < LAYERS)
+		game->scene[i++] = ft_memalloc(sizeof(game->image->pixels));
+	game->cam->offsetx = WIDTH / 2;
+	game->cam->offsety = HEIGHT / 2;
+	game->cam->offsetz = 0;
+	game->cam->zoom = 1.01;
+	game->cam->scale = 1;
+	return (game);
+}
