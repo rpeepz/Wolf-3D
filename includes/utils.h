@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:04:46 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 18:14:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/08 19:55:04 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef struct			s_image
 {
 	void				*image;
-	char				*ptr;
+	char				*pixels;
 	int					bpp;
 	int					stride;
 	int					endian;

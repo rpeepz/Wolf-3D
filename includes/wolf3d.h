@@ -6,22 +6,22 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 00:21:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 18:21:24 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/08 18:32:08 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# include "../libft/includes/libft.h"
-# include "../minilibx/includes/mlx.h"
+# include "../libs/libft/includes/libft.h"
+# include "../libs/minilibx/includes/mlx.h"
 # include "keys.h"
 # include "utils.h"
 # include <math.h>
 # include <pthread.h>
 # include <stdio.h>
 
-# define USAGE "usage: ./wolf3d [file.map]"
+# define USAGE "usage: ./wolf3d [ file.map ]"
 # define WIDTH 1280
 # define HEIGHT 720
 # define VALID_IN_X(x) (x == KEY_RIGHT || x == KEY_LEFT)
@@ -76,7 +76,11 @@ typedef struct			s_game_thread
 void					render(t_game *game);
 void					render_thread(t_game *game, t_pix pix);
 
+void					start_game(t_game *game);
+
 void					init_pix(t_pix *pix, t_game *game);
+int						del_array(char **arr, int len);
+void					del_map(t_map *map);
 t_image					*del_image(t_game *game, t_image *img);
 t_game					*del_game(t_game **agame, int i);
 t_game					*init(char *title, t_map *map);

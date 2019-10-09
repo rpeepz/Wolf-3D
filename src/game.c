@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/01 03:38:46 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/08 20:10:17 by rpapagna         ###   ########.fr       */
+/*   Created: 2019/10/08 16:46:19 by rpapagna          #+#    #+#             */
+/*   Updated: 2019/10/08 17:05:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
 
-int		main(int ac, char **av)
+int		hook_close(t_game *game)
 {
-	t_game	*game;
-	t_map	map;
-	int		ret;
+	hook_keydown(KEY_ESC, game);
+	return (1);
+}
 
-	ft_bzero(&map, sizeof(map));
-	if (ac != 2)
-		return (ft_printf("%s\n", USAGE));
-	if (!ft_strcmp(av[1], "help"))
-		return (ft_help());
-	if ((ret = validate(av[1], &map)) <= 0)
-		return (ft_out(ret));
-	if (!(game = init("Wolf 3D", &map)))
-		return (ft_out(-42));
-	start_game(game);
-	return (0);
+void	start_game(t_game *game)
+{
+	render(game);
+	mlx_do_key_autorepeaton(game->mlx);
+	mlx_hook(game->win, 2, 0, hook_keydown, game);
+	// mlx_hook(game->win, 3, 0, hook_keyup, game);
+	mlx_hook(game->win, 4, 0, hook_mousedown, game);
+	mlx_hook(game->win, 6, 0, hook_mousemove, game);
+	mlx_hook(game->win, 17, 0, hook_close, game);
+	mlx_loop(game->mlx);
 }

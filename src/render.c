@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:11:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 18:24:46 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:17:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_color(t_game *game, t_pix *pix, size_t z)
 
 void	set_layer(t_game *game, int l)
 {
-	ft_memmove(game->image->ptr, game->scene[l], sizeof(game->image->ptr));
+	ft_memmove(game->image->pixels, game->scene[l], sizeof(game->image->pixels));
 }
 
 void	render(t_game *game)
@@ -49,7 +49,7 @@ void	render(t_game *game)
 			while (++pixel.y < HEIGHT)
 			{
 				get_color(game, &pix, pixel.y);
-				*(int *)(game->image->ptr +
+				*(int *)(game->image->pixels +
 					(pixel.x + pixel.y * WIDTH) * game->image->bpp) =
 					(pix.color[0] << 16 | pix.color[1] << 8 | pix.color[2]);
 			}
@@ -58,4 +58,6 @@ void	render(t_game *game)
 //	else
 //	 	render_thread(game, pix);
 	mlx_put_image_to_window(game->mlx, game->win, game->image->image, 0, 0);
+	mlx_string_put(game->mlx, game->win, WIDTH / 2, HEIGHT / 2, (255 << 16 | 255 << 8 | 255), "HELLO");
+	// game->image->image = mlx_xpm_file_to_image(game->mlx, "../resources/splash.XPM", (int *)WIDTH, (int *)HEIGHT);
 }
