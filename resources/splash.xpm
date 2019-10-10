@@ -1,6 +1,4 @@
-/* XPM */
-static char *_570586878690[] = {
-/* columns rows colors chars-per-pixel */
+static char *_splash_[] = {
 "640 480 256 2 ",
 "   c #000000",
 ".  c #0C0201",

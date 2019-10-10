@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 00:21:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/08 18:32:08 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/09 20:37:38 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "../libs/libft/includes/libft.h"
 # include "../libs/minilibx/includes/mlx.h"
+# include "../resources/splash.xpm"
 # include "keys.h"
-# include "utils.h"
 # include <math.h>
 # include <pthread.h>
 # include <stdio.h>
@@ -41,12 +41,11 @@
 **	STRUCTS
 */
 
-typedef struct			s_input
+typedef struct			s_2dp
 {
-	struct s_keys		*key;
-	struct s_mouse		*mouse;
-	char				key_down[4];
-}						t_input;
+	double				x;
+	double				y;
+}						t_2dp;
 
 typedef struct			s_map
 {
@@ -55,8 +54,45 @@ typedef struct			s_map
 	int					**cell;
 }						t_map;
 
+typedef struct			s_image
+{
+	void				*image;
+	char				*pixels;
+	int					bpp;
+	int					stride;
+	int					endian;
+}						t_image;
+
+typedef struct			s_camera
+{
+	double				offsetx;
+	double				offsety;
+	double				offsetz;
+	double				zoom;
+	int					scale;
+}						t_camera;
+
+typedef struct			s_input
+{
+	struct s_keys		*key;
+	struct s_mouse		*mouse;
+	char				key_down[4];
+}						t_input;
+
+typedef struct			s_player
+{
+	t_2dp				loc;
+	t_2dp				eye;
+	float				angle;
+	float				fov;
+	float				depth;
+
+}						t_player;
+
 typedef struct			s_game
 {
+	char				started;
+	t_player			player;
 	void				*mlx;
 	void				*win;
 	char				**scene;
@@ -68,17 +104,15 @@ typedef struct			s_game
 
 typedef struct			s_game_thread
 {
-	t_game				*frac;
-	t_pix				pix;
+	t_game				*game;
 	int					i;
 }						t_game_thread;
 
 void					render(t_game *game);
-void					render_thread(t_game *game, t_pix pix);
+void					render_thread(t_game *game);
 
 void					start_game(t_game *game);
 
-void					init_pix(t_pix *pix, t_game *game);
 int						del_array(char **arr, int len);
 void					del_map(t_map *map);
 t_image					*del_image(t_game *game, t_image *img);

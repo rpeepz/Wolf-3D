@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:37:57 by myoung            #+#    #+#             */
-/*   Updated: 2019/10/01 06:20:52 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:01:49 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define KEY_BRACE_L 33
 # define KEY_I 34
 # define KEY_P 35
+# define KEY_ENTER 36
 # define KEY_L 37
 # define KEY_J 38
 # define KEY_K 40
