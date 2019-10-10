@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 17:02:28 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/08 18:46:05 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:09:42 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ t_game		*del_game(t_game **agame, int i)
 	IF_THEN(game->win != NULL, mlx_destroy_window(game->mlx, game->win));
 	IF_THEN(game->mlx != NULL, ft_memdel((void **)&game->mlx));
 	IF_THEN(game->map != NULL, del_map(game->map));
-	ft_memdel((void **)game);
+	ft_memdel((void **)&game);
 	return (NULL);
 }

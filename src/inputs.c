@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 18:17:03 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/09 21:17:39 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,16 @@ static void		in_key(t_game *game, int key)
 		render(game);
 	}
 	else if ((VALID_IN_Y(key)) && (DEBUG ? ft_out(key) : 1))
+	{
+		game->player.loc.x += (key == KEY_UP) ? sinf(game->player.angle) * 0.5f : sinf(game->player.angle) * -0.5f;
+		game->player.loc.y += (key == KEY_UP) ? cosf(game->player.angle) * 0.5f : cosf(game->player.angle) * -0.5f;
 		game->cam->offsety -= (key == KEY_UP) ? 0.35 : -0.35;
+	}
 	else if ((VALID_IN_X(key)) && (DEBUG ? ft_out(key) : 1))
+	{
+		game->player.angle -= (key == KEY_LEFT) ? 0.01f : -0.01f;
 		game->cam->offsetx -= (key == KEY_LEFT) ? 0.35 : -0.35;
+	}
 	(DEBUG && VALID_IN_X(key)) ? printf("%f\n", game->cam->offsetx) : 0;
 	(DEBUG && VALID_IN_Y(key)) ? printf("%f\n", game->cam->offsety) : 0;
 }

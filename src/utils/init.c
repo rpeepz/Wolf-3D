@@ -6,25 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 04:17:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/08 19:55:45 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:08:50 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/wolf3d.h"
-
-void			init_pix(t_pix *pix, t_game *game)
-{
-	pix->w = 5;
-	pix->h = (pix->w * HEIGHT) / WIDTH;
-	pix->xmin = -(pix->w / 2);
-	pix->ymin = -(pix->h / 2);
-	pix->xmax = pix->xmin + pix->w;
-	pix->ymax = pix->ymin + pix->h;
-	pix->xmin = pix->xmin - (WIDTH / 2) + game->cam->offsetx;
-	pix->ymin = pix->ymin - (HEIGHT / 2) + game->cam->offsety;
-	pix->xmax = pix->xmax - (WIDTH / 2) + game->cam->offsetx;
-	pix->ymax = pix->ymax - (HEIGHT / 2) + game->cam->offsety;
-}
 
 static t_image	*new_image(t_game *game)
 {
