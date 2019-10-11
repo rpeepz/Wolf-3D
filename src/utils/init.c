@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 04:17:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/09 19:08:50 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/10 21:56:03 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_game			*init(char *title, t_map *map)
 		!(game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, title)) ||
 		!(game->scene = ft_memalloc(sizeof(char *) * LAYERS)) ||
 		!(game->image = new_image(game)) ||
-		!(game->cam = ft_memalloc(sizeof(t_camera))) ||
 		!(game->in = ft_memalloc(sizeof(t_input))) ||
 		!(game->in->key = ft_memalloc(sizeof(t_keys))) ||
 		!(game->in->mouse = ft_memalloc(sizeof(t_mouse))))
@@ -46,10 +45,12 @@ t_game			*init(char *title, t_map *map)
 	i = 0;
 	while (i < LAYERS)
 		game->scene[i++] = ft_memalloc(sizeof(game->image->pixels));
-	game->cam->offsetx = WIDTH / 2;
-	game->cam->offsety = HEIGHT / 2;
-	game->cam->offsetz = 0;
-	game->cam->zoom = 1.01;
-	game->cam->scale = 1;
+	game->player.loc.x = (float)game->map->width / 2;
+	game->player.loc.y = (float)game->map->height / 2;
+	game->player.angle = 0.0f;
+	game->player.fov = 3.14159f / 4.0f;
+	game->player.depth = map->height > map->width ? map->height : map->width;
+	game->cam.offsetz = 0.0f;
+	game->cam.zoom = 1.0f;
 	return (game);
 }

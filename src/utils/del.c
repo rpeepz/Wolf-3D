@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 17:02:28 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/09 18:09:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:22:38 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_game		*del_game(t_game **agame, int i)
 		IF_THEN(game->in->key != NULL, ft_memdel((void **)&game->in->key));
 	}
 	IF_THEN(game->in != NULL, ft_memdel((void **)&game->in));
-	IF_THEN(game->cam != NULL, ft_memdel((void **)&game->cam));
 	IF_THEN(game->image != NULL, del_image(game, game->image));
 	if (game->scene != NULL)
 	{
