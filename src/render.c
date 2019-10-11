@@ -6,58 +6,98 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:11:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/09 20:21:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/10 23:31:18 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
 
-void	get_color(t_game *game, int *color, size_t z)
+void	color_get(int *color, float distance, float depth)
 {
-	if (z > (HEIGHT / 2) + game->cam->offsetz)
-	{
-		color[0] = (int)map_zero(game->in->mouse->x, HEIGHT, 0, 255);
-		color[1] = 0;
-		color[2] = (int)map_zero(game->cam->offsetz, 20, 0, 255);
-	}
-	else
-	{
-		color[0] = (int)map_zero(game->cam->offsetz, 20, 255, 0);
-		color[1] = 0;
-		color[2] = (int)map_zero(game->in->mouse->x, HEIGHT, 0, 255);
-	}
+	int		mod;
+	float	dist;
+
+	dist = distance / depth;
+	mod = dist * 255;
+	if (mod >= 250)
+		printf("too dark here\n");
+	color[0] = (255 - mod) << 16;
+	color[0] += (255 - mod) << 8;
+	color[0] += (255 - mod);
+	color[1] = (255 - mod) << 16;
+	color[1] += (255 - mod);
+	color[2] = (255 - mod) << 8;
+	color[2] += (255 - mod);
+	color[3] = (255 - mod) << 16;
+	color[3] += (255 - mod) << 8;
+	color[4] = (255 - mod) << 16;
+	color[5] = (255 - mod) << 8;
+	color[6] = (255 - mod);
 }
 
-// void	set_layer(t_game *game, int l)
-// {
-// 	ft_memmove(game->image->pixels, game->scene[l], sizeof(game->image->pixels));
-// }
+void	set_layer(t_game *game, int l)
+{
+	ft_memmove(game->image->pixels, game->scene[l],
+		sizeof(game->image->pixels));
+}
 
-void	render1(t_game *game)
+void	get_hit(t_render *v, t_game *game)
+{
+	t_point		cast;
+
+	v->distance = 0;
+	v->hit = 0;
+	while (!v->hit && v->distance < game->player.depth)
+	{
+		v->distance += 0.008f;
+		cast.x = game->player.loc.x + game->player.eye.x * v->distance;
+		cast.y = game->player.loc.y + game->player.eye.y * v->distance;
+		if ((int)cast.x < 0 || (int)cast.x >= game->map->width ||
+			(int)cast.y < 0 || (int)cast.y >= game->map->height)
+		{
+			v->hit = 1;
+			v->distance = game->player.depth;
+		}
+		else
+			v->hit = game->map->cell[cast.y][cast.x];
+	}
+	v->ceiling = ((float)HEIGHT / 2) - HEIGHT / (float)v->distance;
+	v->floor = HEIGHT - v->ceiling;
+}
+
+void	draw_(t_game *game, t_render v, t_point pixel, int *color)
+{
+	if ((int)pixel.y <= v.ceiling)
+		*(int *)(game->image->pixels +
+		(pixel.x + pixel.y * WIDTH) * game->image->bpp) = 0x2A2A2A;
+	else if ((int)pixel.y > v.ceiling && (int)pixel.y <= v.floor)
+		*(int *)(game->image->pixels +
+		(pixel.x + pixel.y * WIDTH) * game->image->bpp) =
+			color[v.hit ? v.hit - 1 : 0];
+	else
+		*(int *)(game->image->pixels +
+		(pixel.x + pixel.y * WIDTH) * game->image->bpp) = 0x06A6A6A;
+}
+
+void	render(t_game *game)
 {
 	t_point		pixel;
-	size_t		z;
-	int			color[3];
+	t_render	v;
+	int			color[7];
 
-	z = 0;
-	// set_layer(game, 0);
-	if (SINGLE_CORE)
+	set_layer(game, 0);
+	pixel.x = -1;
+	while (++pixel.x < WIDTH)
 	{
-		pixel.x = -1;
-		while (++pixel.x < WIDTH)
-		{
-			pixel.y = -1;
-			while (++pixel.y < HEIGHT)
-			{
-				get_color(game, color, pixel.y);
-				*(int *)(game->image->pixels +
-					(pixel.x + pixel.y * WIDTH) * game->image->bpp) =
-					(color[0] << 16 | color[1] << 8 | color[2]);
-			}
-		}
+		v.ray_angle = (game->player.angle - (game->player.fov / 2.0)) +
+					((float)pixel.x / (float)WIDTH) * game->player.fov;
+		game->player.eye.x = sinf(v.ray_angle);
+		game->player.eye.y = cosf(v.ray_angle);
+		get_hit(&v, game);
+		color_get(color, v.distance, game->player.depth);
+		pixel.y = -1;
+		while (++pixel.y < HEIGHT)
+			draw_(game, v, pixel, color);
 	}
-//	else
-//	 	render_thread(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->image->image, 0, 0);
-	mlx_string_put(game->mlx, game->win, WIDTH / 2, HEIGHT / 2, (255 << 16 | 255 << 8 | 255), "HELLO");
 }
