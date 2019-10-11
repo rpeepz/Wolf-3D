@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 00:21:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/09 20:37:38 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/10 23:31:40 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,8 @@ typedef struct			s_image
 
 typedef struct			s_camera
 {
-	double				offsetx;
-	double				offsety;
 	double				offsetz;
 	double				zoom;
-	int					scale;
 }						t_camera;
 
 typedef struct			s_input
@@ -86,19 +83,27 @@ typedef struct			s_player
 	float				angle;
 	float				fov;
 	float				depth;
-
 }						t_player;
+
+typedef struct			s_render
+{
+	float				ray_angle;
+	float				distance;
+	int					hit;
+	int					ceiling;
+	int					floor;
+}						t_render;
 
 typedef struct			s_game
 {
 	char				started;
 	t_player			player;
+	t_camera			cam;
 	void				*mlx;
 	void				*win;
 	char				**scene;
 	t_map				*map;
 	t_image				*image;
-	t_camera			*cam;
 	t_input				*in;
 }						t_game;
 
@@ -108,9 +113,11 @@ typedef struct			s_game_thread
 	int					i;
 }						t_game_thread;
 
-void					render(t_game *game);
-void					render_thread(t_game *game);
+/*
+**void					render_thread(t_game *game);
+*/
 
+void					render(t_game *game);
 void					start_game(t_game *game);
 
 int						del_array(char **arr, int len);
