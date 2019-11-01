@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/10 23:39:50 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/14 19:32:21 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,38 @@
 
 int				hook_mousedown(int in, int x, int y, t_game *game)
 {
-	double		zoom;
+	// double		zoom;
 
 	(void)y;
 	(void)x;
 	if (in == SCROLL_UP || in == SCROLL_DOWN || STATIC_ZOOM(in))
 	{
-		zoom = (game->cam.zoom / 100 + 1);
-		if ((in == SCROLL_DOWN || in == PG_DOWN) && (zoom > game->cam.zoom))
-			(DEBUG ? printf("Minimum Zoom reached\n") : 0);
-		else
+		// zoom = (game->cam.zoom / 100 + 1);
+		// if ((in == SCROLL_DOWN || in == PG_DOWN) && (zoom > game->cam.zoom))
+		// 	(DEBUG ? printf("Minimum Zoom reached\n") : 0);
+		// else
+		// {
+		// 	if ((in == SCROLL_UP || in == PG_UP) && (DEBUG ? ft_out(in) : 1))
+		// 		game->cam.zoom += zoom;
+		// 	else if ((in == SCROLL_DOWN || in == PG_DOWN) &&
+		// 		(DEBUG ? ft_out(in) : 1))
+		// 		game->cam.zoom -= zoom;
+		// 	if (DEBUG ? printf("%f\n", game->cam.zoom) : 1 && !STATIC_ZOOM(in))
+		// 	{
+		// 		;
+		// 	}
+		printf("%d\n", in);
+		if (in == SCROLL_UP)
 		{
-			if ((in == SCROLL_UP || in == PG_UP) && (DEBUG ? ft_out(in) : 1))
-				game->cam.zoom += zoom;
-			else if ((in == SCROLL_DOWN || in == PG_DOWN) &&
-				(DEBUG ? ft_out(in) : 1))
-				game->cam.zoom -= zoom;
-			if (DEBUG ? printf("%f\n", game->cam.zoom) : 1 && !STATIC_ZOOM(in))
-			{
-				;
-			}
-			render(game);
+			hook_keydown(KEY_UP, game);
 		}
+		else if (in == SCROLL_DOWN)
+		{
+			hook_keydown(KEY_DOWN, game);
+		}
+		(void)game;
+			// render(game);
+		// }
 	}
 	return (0);
 }
@@ -46,6 +56,8 @@ int				hook_mousemove(int x, int y, t_game *game)
 	{
 		if (x > 0 && y > 0 && x < WIDTH && y < HEIGHT)
 		{
+			game->player.angle = map_zero(x, WIDTH, -(PI * 2) + 1, (PI * 2) - 1);
+			printf("%f\n", game->player.angle);
 			game->in->mouse->lastx = game->in->mouse->x;
 			game->in->mouse->lasty = game->in->mouse->y;
 			game->in->mouse->x = x;

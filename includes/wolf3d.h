@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 00:21:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/10 23:31:40 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/14 19:26:41 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define VALID_IN_Z(x) (x == KEY_PLUS || x == KEY_MINUS || x == KEY_SPACE)
 # define STATIC_ZOOM(x) (x == PG_UP || x == PG_DOWN)
 # define LAYERS 5
+# define PI 3.1415926535
 # define SINGLE_CORE 1
 # define THREAD_COUNT 8
 # ifdef _DEBUG_RULE_
