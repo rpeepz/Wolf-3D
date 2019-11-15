@@ -6,11 +6,15 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:11:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/10 23:31:18 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:44:23 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
+
+/*
+**	assign values to the colors array by [r, g, b] (with shading by distance)
+*/
 
 void	color_get(int *color, float distance, float depth)
 {
@@ -19,7 +23,7 @@ void	color_get(int *color, float distance, float depth)
 
 	dist = distance / depth;
 	mod = dist * 255;
-	if (mod >= 250)
+	if (mod >= 250 && DEBUG)
 		printf("too dark here\n");
 	color[0] = (255 - mod) << 16;
 	color[0] += (255 - mod) << 8;
@@ -35,11 +39,19 @@ void	color_get(int *color, float distance, float depth)
 	color[6] = (255 - mod);
 }
 
+/*
+**	replace current image with a set layer
+*/
+
 void	set_layer(t_game *game, int l)
 {
 	ft_memmove(game->image->pixels, game->scene[l],
 		sizeof(game->image->pixels));
 }
+
+/*
+**	get floor, ceiling, and wall pixel colors in current collumn
+*/
 
 void	get_hit(t_render *v, t_game *game)
 {
@@ -78,6 +90,11 @@ void	draw_(t_game *game, t_render v, t_point pixel, int *color)
 		*(int *)(game->image->pixels +
 		(pixel.x + pixel.y * WIDTH) * game->image->bpp) = 0x06A6A6A;
 }
+
+/*
+**	calculate from the current player location, the angle from which the rays are sent
+**	and draw column by column the values retrieved from get_hit
+*/
 
 void	render(t_game *game)
 {

@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 16:46:19 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/10 23:31:27 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:34:47 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int		press_start(int key, t_game *game)
 		game->started = 1;
 		start_game(game);
 	}
+	if (key == KEY_ESC)
+		hook_close(game);
 	return (0);
 }
 
@@ -35,14 +37,20 @@ void	splash(t_game *game)
 
 	tw = 0;
 	th = 0;
+	ft_help();
 	mlx_put_image_to_window(game->mlx, game->win,
 	mlx_xpm_to_image(game->mlx, _splash_, &tw, &th),
 	(WIDTH / 2 - (tw / 2)), (HEIGHT / 2 - (th / 2)));
 	mlx_string_put(game->mlx, game->win, (WIDTH * 10 / 27), (HEIGHT * 10 / 25),
-	(0xffefd5), "Press Enter to start");
+	(0xffefd5), "Press Enter");
 	mlx_hook(game->win, 2, 0, press_start, game);
+	mlx_hook(game->win, 17, 0, hook_close, game);
 	mlx_loop(game->mlx);
 }
+
+/*
+**	run 'press start' screen and enter render loop
+*/
 
 void	start_game(t_game *game)
 {

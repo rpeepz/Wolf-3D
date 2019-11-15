@@ -6,11 +6,15 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/14 19:32:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:38:03 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
+
+/*
+**	No mouse buttons are supported at this time
+*/
 
 int				hook_mousedown(int in, int x, int y, t_game *game)
 {
@@ -50,6 +54,10 @@ int				hook_mousedown(int in, int x, int y, t_game *game)
 	return (0);
 }
 
+/*
+**	turn player camera with mouse
+*/
+
 int				hook_mousemove(int x, int y, t_game *game)
 {
 	if (!game->in->mouse->lock)
@@ -72,6 +80,10 @@ int				hook_mousemove(int x, int y, t_game *game)
 	return (0);
 }
 
+/*
+**	calculate if the next input causes the player to collide with a wall
+*/
+
 static int		check_clip(t_game game, int key)
 {
 	game.player.loc.x += sinf(game.player.angle) * ((key == KEY_UP) ?
@@ -84,6 +96,10 @@ static int		check_clip(t_game game, int key)
 		return (0);
 	return (1);
 }
+
+/*
+**	process a valid input key
+*/
 
 static void		in_key(t_game *game, int key)
 {
@@ -109,6 +125,10 @@ static void		in_key(t_game *game, int key)
 	(DEBUG && VALID_IN_Y(key)) ? printf("%f, %f\n",
 		game->player.loc.x, game->player.loc.y) : 0;
 }
+
+/*
+**	validate the input on current hook
+*/
 
 int				hook_keydown(int key, t_game *game)
 {

@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/01 00:16:40 by rpapagna          #+#    #+#              #
-#    Updated: 2019/10/08 17:27:20 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/11/15 15:26:06 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,7 @@ fclean: clean
 
 re: fclean all
 
-$(NAME): $(OBJ)
-		@make -C libs/libft
+$(NAME): $(ARCHIVE) $(OBJ)
 		@make -C libs/minilibx_macos
 		@printf "[$(GREEN)$(NAME)$(NC) ]\t[:##        :]\r"
 		@gcc $(FLAGS) $(OBJ_PATH)/*.o $(MLX_LNK) $(FT_LNK) -o $(NAME)
@@ -108,3 +107,5 @@ $(OBJ_PATH)/%.o: src/utils/%.c $(INC) | $(OBJ_PATH)
 		@gcc $(FLAGS) -I ./$(INC) -o $@ -c $<
 $(OBJ_PATH)/%.o: src/%.c $(INC) | $(OBJ_PATH)
 		@gcc $(FLAGS) -I ./$(INC) -o $@ -c $<
+$(ARCHIVE):
+		@make -C libs/libft

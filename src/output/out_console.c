@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:40:38 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 18:20:18 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:30:02 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,16 @@ int		ft_out(int key)
 int		ft_help(void)
 {
 	ft_printf("Controls:\n");
-	ft_printf("%11s\tMove\n", "arrow keys");
-	ft_printf("%11s\tJump\n", "Space");
-	ft_printf("%11c\tIncrease 'Z'\n%11c\tDecrease 'Z'\n",
-	'+', '-');
-	ft_printf("%11c\tToggle Pause\n", 'P');
-	ft_printf("%11s\tIncrease Zoom\n%11s\tZecrease zoom\n",
-	"page up", "page down");
-	ft_printf("%11c\tReset position, 'Z' & zoom\n", 'R');
+	ft_printf("%11s\t\n", "Arrow Keys");
+	ft_printf("%11s\tMove forward\n", "UP");
+	ft_printf("%11s\tMove backward\n", "DOWN");
+	ft_printf("%11s\tTurn\n", "LEFT/RIGHT");
+	// ft_printf("%11s\tJump\n", "Space");
+	// ft_printf("%11c\tIncrease 'Z'\n%11c\tDecrease 'Z'\n", '+', '-');
+	// ft_printf("%11c\tToggle Pause\n", 'P');
+	// ft_printf("%11s\tIncrease Zoom\n%11s\tZecrease zoom\n", \
+	// "page up", "page down");
+	// ft_printf("%11c\tReset position, 'Z' & zoom\n", 'R');
 	ft_printf("%11s\tQuit\n", "esc");
 	return (1);
 }

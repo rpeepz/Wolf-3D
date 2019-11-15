@@ -6,11 +6,15 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:38:46 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/08 20:10:17 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:33:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
+
+/*
+** Validate map, init game, and start game
+*/
 
 int		main(int ac, char **av)
 {
