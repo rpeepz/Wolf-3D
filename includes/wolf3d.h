@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 00:21:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/14 19:26:41 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:47:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct			s_image
 	int					endian;
 }						t_image;
 
+//unused in engine
 typedef struct			s_camera
 {
 	double				offsetz;
@@ -74,7 +75,7 @@ typedef struct			s_input
 {
 	struct s_keys		*key;
 	struct s_mouse		*mouse;
-	char				key_down[4];
+	char				key_down[4]; //cache for held down keys
 }						t_input;
 
 typedef struct			s_player
@@ -108,6 +109,7 @@ typedef struct			s_game
 	t_input				*in;
 }						t_game;
 
+//struct to hold values passed around in different threads
 typedef struct			s_game_thread
 {
 	t_game				*game;
