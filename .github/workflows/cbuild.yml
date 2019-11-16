@@ -19,5 +19,6 @@ jobs:
     runs-on: macOS-latest
     needs: [job_libs]
     steps:
+    - uses: actions/checkout@v1
     - name: build
       run: make
