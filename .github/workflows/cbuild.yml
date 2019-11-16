@@ -1,0 +1,23 @@
+name: C/Build
+
+on: [push]
+
+jobs:
+  job_libs:
+    name: libs
+    runs-on: macOS-latest
+    steps:
+      - name: making libraries
+        run: |
+          make fclean
+          make libs/libft/libft.a 
+          make libs/minilibx_macos/libmlx_macos.a
+          
+  job_build:
+    name: wolf3d
+    runs-on: macOS-latest
+    needs: [job_libs]
+    steps:
+    - uses: actions/checkout@v1
+    - name: build
+      run: make
