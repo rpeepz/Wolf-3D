@@ -6,11 +6,13 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/01 00:16:40 by rpapagna          #+#    #+#              #
-#    Updated: 2019/11/15 15:26:06 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/11/15 16:01:46 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= wolf3d
+ARCHIVE	= libs/libft/libft.a
+LIBX	= libs/minilibx_macos/libmlx_macos.a
 
 #COLORS
 GREEN	= \033[0;32m
@@ -44,7 +46,7 @@ OBJ		+= $(addprefix $(OBJ_PATH)/,$(UTIL:.c=.o))
 
 .PHONY:	all clean fclean re debug
 
-all:	$(NAME)
+all:	$(LIBX) $(ARCHIVE) $(NAME)
 
 clean:
 		@printf "[$(RED)clean   obj$(NC)]\t[:#         :]\r"
@@ -67,8 +69,7 @@ fclean: clean
 
 re: fclean all
 
-$(NAME): $(ARCHIVE) $(OBJ)
-		@make -C libs/minilibx_macos
+$(NAME): $(OBJ)
 		@printf "[$(GREEN)$(NAME)$(NC) ]\t[:##        :]\r"
 		@gcc $(FLAGS) $(OBJ_PATH)/*.o $(MLX_LNK) $(FT_LNK) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC) ]\t[:##########:]\n"
@@ -109,3 +110,5 @@ $(OBJ_PATH)/%.o: src/%.c $(INC) | $(OBJ_PATH)
 		@gcc $(FLAGS) -I ./$(INC) -o $@ -c $<
 $(ARCHIVE):
 		@make -C libs/libft
+$(LIBX):
+		@make -C libs/minilibx_macos
