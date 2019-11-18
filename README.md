@@ -52,7 +52,7 @@ Executable `wolf3d` will be created
 For help run `./wolf3d help`  
 
 Make sure you have the required [dependencies](#dependencies) before proceeding.  
-For instructions and/or greater detail refer to the project [pdf](#pdf)  
+For instructions and/or greater detail refer to the project [pdf](#subject-pdf)  
 
 <br>
 
